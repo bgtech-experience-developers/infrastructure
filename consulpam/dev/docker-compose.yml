@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  api:
+    image: bgtechexpirence:latest
+    depends_on:
+      - postgres
+    env_file:
+      - .env.dev
+
+  postgres:
+    image: postgres:16
+    container_name: postgres_db
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env.dev
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./pg_hba_local_config.conf:/var/lib/postgresql/data/pg_hba.conf
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    ports:
+      - "8080:80"
+    env_file:
+      - .env.dev
+    expose:
+      - "80"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
