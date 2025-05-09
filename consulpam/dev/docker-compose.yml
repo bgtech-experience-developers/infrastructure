@@ -12,7 +12,7 @@ services:
 
   postgres:
     image: postgres:16
-    container_name: postgres_db
+    container_name: postgres_dev_db
     restart: always
     ports:
       - "5432:5432"
@@ -24,11 +24,24 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - pg_dev_data:/var/lib/postgresql/data
       - ./pg_hba_local_config.conf:/var/lib/postgresql/data/pg_hba.conf
     networks:
       - consulpam_network_dev
-
+  backup:
+    image: alpine:latest
+    volumes:
+      - ./backup/backup_script.sh:/scripts/backup_script.sh
+      - ./backups:/backups
+      - ./backup/.env.backup:/etc/backup_env:ro
+    env_file: .env.backup
+    command: >
+      sh -c "apk add --no-cache postgresql-client bash &&
+      chmod +x /scripts/backup_script.sh &&
+      echo '0 0 */5 * * /scripts/backup_script.sh' > /etc/crontabs/root &&
+      crond -f"
+    depends_on:
+      - postgres
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
