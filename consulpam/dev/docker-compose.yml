@@ -58,7 +58,7 @@ services:
       - consulpam_network_dev
 
 volumes:
-  postgres_data:
+  pg_dev_data:
 networks:
   consulpam_network_dev:
     driver: bridge
