@@ -18,6 +18,8 @@ services:
       - "5432:5432"
     env_file:
       - .env.dev
+    environment:
+      POSTGRES_DB: initial_db
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin"]
       interval: 10s
