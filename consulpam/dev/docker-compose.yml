@@ -9,7 +9,17 @@ services:
       - .env.dev
     networks:
       - consulpam_network_dev
-
+    command:
+  front:
+    image: ${USER_DOCKER}/front-end-dev-consulpam:latest
+    env_file:
+      - .env.dev_front
+    depends_on:
+      - api
+    networks:
+      - consulpam_network_dev
+    ports:
+      - "3050:3050"
   postgres:
     image: postgres:16
     container_name: postgres_dev_db
