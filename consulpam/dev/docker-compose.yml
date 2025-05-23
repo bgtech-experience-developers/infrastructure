@@ -19,7 +19,7 @@ services:
     networks:
       - consulpam_network_dev
     ports:
-      - "3050:3050"
+      - "3050:3000"
   postgres:
     image: postgres:16
     container_name: postgres_dev_db
