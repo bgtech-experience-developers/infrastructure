@@ -9,7 +9,9 @@ services:
       - .env.dev
     networks:
       - consulpam_network_dev
-    command:
+    ports:
+      -"3080":"3000"
+    
   front:
     image: ${USER_DOCKER}/front-end-dev-consulpam:latest
     env_file:
