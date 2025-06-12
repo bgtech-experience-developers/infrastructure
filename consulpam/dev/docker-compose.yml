@@ -10,7 +10,7 @@ services:
     networks:
       - consulpam_network_dev
     ports:
-      -"3080":"3000"
+      - "3080:3000"
     
   front:
     image: ${USER_DOCKER}/front-end-dev-consulpam:latest
