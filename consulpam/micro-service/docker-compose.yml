@@ -1,16 +1,16 @@
 services:
-  rabbitmq:
-    image: rabbitmq:3.12-management
-    ports:
-      - "5672:5672"     # Porta do broker
-      - "15672:15672"   # Porta da interface web
-    environment:
-      RABBITMQ_DEFAULT_USER: user
-      RABBITMQ_DEFAULT_PASS: password
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
+  # rabbitmq:
+  #   image: rabbitmq:3.12-management
+  #   ports:
+  #     - "5672:5672"     
+  #     - "15672:15672"
+  #   env_file:
+  #     - .env.rabbitmq
+  #     - rabbitmq_data:/var/lib/rabbitmq
   notify-service:
     image: ${USER_DOCKER}/micro-service-consulpam:latest
+    env_file:
+      - .env.notify_service
 volumes:
   rabbitmq_data:
 networks:
