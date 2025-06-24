@@ -8,7 +8,7 @@ services:
   #     - .env.rabbitmq
   #     - rabbitmq_data:/var/lib/rabbitmq
   notify-service:
-    image: ${USER_DOCKER}/micro-service-consulpam:latest
+    image: ${USER_DOCKER}/micro-service-dev-consulpam:latest
     env_file:
       - .env.notify_service
     networks:
