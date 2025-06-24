@@ -16,4 +16,5 @@ services:
 volumes:
   rabbitmq_data:
 networks:
-  shared_network
+  shared_network:
+    driver: bridge
