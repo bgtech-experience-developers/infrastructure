@@ -11,6 +11,8 @@ services:
     image: ${USER_DOCKER}/micro-service-consulpam:latest
     env_file:
       - .env.notify_service
+    networks:
+      - shared_network
 volumes:
   rabbitmq_data:
 networks:
