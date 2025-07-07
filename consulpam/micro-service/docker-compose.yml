@@ -1,20 +1,36 @@
 services:
-  # rabbitmq:
-  #   image: rabbitmq:3.12-management
-  #   ports:
-  #     - "5672:5672"     
-  #     - "15672:15672"
-  #   env_file:
-  #     - .env.rabbitmq
-  #     - rabbitmq_data:/var/lib/rabbitmq
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    ports:
+      - "5672:5672"     
+      - "15672:15672"
+    env_file:
+      - .env.rabbitmq
+      - rabbitmq_data:/var/lib/rabbitmq
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - shared_network
+    volumes:
+      - redis_data:/data
+  rate-limiting-service: 
+    image: ${USER_DOCKER}/micro-service-dev-consulpam:latest-rate
+    env_file:
+      - .env.rate_service
+    networks:
+      - shared_network
   notify-service:
     image: ${USER_DOCKER}/micro-service-dev-consulpam:latest-notify
     env_file:
       - .env.notify_service
     networks:
       - shared_network
+    
 volumes:
   rabbitmq_data:
+  redis_data:
 networks:
   shared_network:
     driver: bridge
