@@ -22,12 +22,17 @@ services:
       - .env.rate_service
     networks:
       - shared_network
+    depends_on:
+      - rabbitmq
+      - redis
   notify-service:
     image: ${USER_DOCKER}/micro-service-dev-consulpam:latest-notify
     env_file:
       - .env.notify_service
     networks:
       - shared_network
+    depends_on:
+      - rabbitmq
     
 volumes:
   rabbitmq_data:
