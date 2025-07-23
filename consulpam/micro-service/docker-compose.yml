@@ -6,6 +6,7 @@ services:
       - "15672:15672"
     env_file:
       - .env.rabbitmq
+    volumes:
       - rabbitmq_data:/var/lib/rabbitmq
   redis:
     image: redis:latest
@@ -30,6 +31,7 @@ services:
     
 volumes:
   rabbitmq_data:
+    name: rabbitmq_dev_data
   redis_data:
 networks:
   shared_network:
