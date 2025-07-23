@@ -6,6 +6,8 @@ services:
       - "15672:15672"
     env_file:
       - .env.rabbitmq
+    networks:
+      - shared_network
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
   redis:
