@@ -1,21 +1,10 @@
 services:
-  rabbitmq:
-    image: rabbitmq:3.12-management
-    ports:
-      - "5672:5672"     
-      - "15672:15672"
-    env_file:
-      - .env.rabbitmq
-    networks:
-      - shared_network
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
   redis:
     image: redis:latest
     ports:
       - "6379:6379"
     networks:
-      - shared_network
+      - consulpam_network_dev
     volumes:
       - redis_data:/data
   rate-limiting-service: 
@@ -23,23 +12,20 @@ services:
     env_file:
       - .env.rate_service
     networks:
-      - shared_network
+      - consulpam_network_dev
     depends_on:
-      - rabbitmq
       - redis
+    container_name: rate-limiting
   notify-service:
     image: ${USER_DOCKER}/micro-service-dev-consulpam:latest-notify
     env_file:
       - .env.notify_service
     networks:
-      - shared_network
-    depends_on:
-      - rabbitmq
+      - consulpam_network_dev
+    container_name: notify-service
     
 volumes:
-  rabbitmq_data:
-    name: rabbitmq_dev_data
   redis_data:
 networks:
-  shared_network:
-    driver: bridge
+  consulpam_network_dev:
+    external: true

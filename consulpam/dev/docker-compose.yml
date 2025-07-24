@@ -9,6 +9,7 @@ services:
       - .env.dev
     networks:
       - consulpam_network_dev
+    container_name: consulpam-api-dev
     ports:
       - "3080:3000"
     
@@ -18,8 +19,11 @@ services:
       - .env.dev_front
     depends_on:
       - api
+      - rabbitmq
     networks:
       - consulpam_network_dev
+    container_name: consulpam-web-dev
+
     ports:
       - "3050:3000"
   postgres:
@@ -56,6 +60,17 @@ services:
       crond -f"
     depends_on:
       - postgres
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    ports:
+      - "5672:5672"     
+      - "15672:15672"
+    env_file:
+      - .env.rabbitmq
+    networks:
+      - consulpam_network_dev
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
@@ -75,6 +90,8 @@ services:
 volumes:
   pg_dev_data:
     name: staging_pg_dev_data
+  rabbitmq_data:
+    name: rabbitmq_dev_data
 networks:
   consulpam_network_dev:
     driver: bridge
