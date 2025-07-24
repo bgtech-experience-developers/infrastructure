@@ -93,5 +93,5 @@ volumes:
   rabbitmq_data:
     name: rabbitmq_dev_data
 networks:
-  consulpam_network_dev:
-    driver: bridge
+   consulpam_network_dev:
+    external: true
