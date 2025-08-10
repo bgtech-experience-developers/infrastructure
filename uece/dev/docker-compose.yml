@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  api:
+    image: ${USER_DOCKER}/backend-dev-uece:latest
+    env_file:
+      - .env.dev
+    networks:
+      - consulpam_network_dev
+    container_name: uece-api-dev
+    ports:
+      - "3150:3000"
+    
+  front:
+    image: ${USER_DOCKER}/front-end-dev-uece:latest
+    env_file:
+      - .env.dev_front
+    depends_on:
+      - api
+    networks:
+      - consulpam_network_dev
+    container_name: uece-web-dev
+
+    ports:
+      - "3100:5173"
+
+  # backup:
+  #   image: alpine:latest
+  #   volumes:
+  #     - ./backup/backup_script.sh:/scripts/backup_script.sh
+  #     - ./backup:/backups
+  #     - ./.env.backup_system:/etc/backup_env
+
+  #   command: >
+  #     sh -c "apk add --no-cache postgresql-client bash &&
+  #     chmod +x /scripts/backup_script.sh &&
+  #     echo '0 0 */5 * * /scripts/backup_script.sh' > /etc/crontabs/root &&
+  #     crond -f"
+  #   depends_on:
+  #     - postgres
+networks:
+   consulpam_network_dev:
+    external: true
