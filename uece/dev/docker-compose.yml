@@ -22,7 +22,7 @@ services:
     container_name: uece-web-dev
 
     ports:
-      - "2052:4173"
+      - "2052:5173"
 
   # backup:
   #   image: alpine:latest
