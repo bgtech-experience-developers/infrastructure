@@ -45,9 +45,6 @@ services:
       - consulpam_network_dev
   rabbitmq:
     image: rabbitmq:3.13-management-alpine
-    ports:
-      - "5672:5672"     
-      - "15672:15672"
     env_file:
       - .env.rabbitmq
     networks:
