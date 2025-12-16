@@ -19,7 +19,6 @@ services:
       - .env.dev_front
     depends_on:
       - api
-      - rabbitmq
     networks:
       - consulpam_network_dev
     container_name: consulpam-web-dev
@@ -30,8 +29,6 @@ services:
     image: postgres:16
     container_name: postgres_dev_db
     restart: always
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_DB: initial_db
@@ -46,20 +43,6 @@ services:
       - pg_dev_data:/var/lib/postgresql/data
     networks:
       - consulpam_network_dev
-  backup:
-    image: alpine:latest
-    volumes:
-      - ./backup/backup_script.sh:/scripts/backup_script.sh
-      - ./backup:/backups
-      - ./.env.backup_system:/etc/backup_env
-
-    command: >
-      sh -c "apk add --no-cache postgresql-client bash &&
-      chmod +x /scripts/backup_script.sh &&
-      echo '0 0 */5 * * /scripts/backup_script.sh' > /etc/crontabs/root &&
-      crond -f"
-    depends_on:
-      - postgres
   rabbitmq:
     image: rabbitmq:3.13-management-alpine
     ports:
@@ -71,21 +54,21 @@ services:
       - consulpam_network_dev
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    restart: always
-    ports:
-      - "8080:80"
-    environment:
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-    expose:
-      - "80"
-    depends_on:
-      - postgres
-    networks:
-      - consulpam_network_dev
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: pgadmin
+  #   restart: always
+  #   ports:
+  #     - "8080:80"
+  #   environment:
+  #     PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+  #     PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+  #   expose:
+  #     - "80"
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - consulpam_network_dev
 
 volumes:
   pg_dev_data:
