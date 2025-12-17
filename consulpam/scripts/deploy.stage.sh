@@ -8,7 +8,7 @@ chmod +x ./dev/env.stage.sh
 ./dev/env.stage.sh
 
 # 2. Login Docker (se necessário)
-echo "$DOCKERHUB_TOKEN" | docker login -u "$USER_DOCKER" --password-stdin
+echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
 # 3. Atualiza imagem e container
 cd dev
