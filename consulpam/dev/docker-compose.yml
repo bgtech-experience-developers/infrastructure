@@ -2,11 +2,11 @@ version: "3.8"
 
 services:
   api:
-    image: ${USER_DOCKER}/backend-dev-consulpam:latest
+    image: ${DOCKERHUB_USERNAME}/backend-dev-consulpam:${GITHUB_SHA}
     depends_on:
       - postgres
     env_file:
-      - .env.dev
+      - .env.stage
     networks:
       - consulpam_network_dev
     container_name: consulpam-api-dev
@@ -14,7 +14,7 @@ services:
       - "3080:3000"
     
   front:
-    image: ${USER_DOCKER}/front-end-dev-consulpam:latest
+    image: ${DOCKERHUB_USERNAME}/front-end-dev-consulpam:latest
     env_file:
       - .env.dev_front
     depends_on:
