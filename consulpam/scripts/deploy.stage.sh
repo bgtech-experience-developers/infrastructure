@@ -36,7 +36,7 @@ fi
 
 # === Renderiza envs ===
 echo "🧩 Gerando arquivos .env"
-./dev/env.dev.sh
+chmod +x ./dev/env.dev.sh
 
 # === Subida dos containers ===
 echo "🐳 Atualizando backend sem downtime"
