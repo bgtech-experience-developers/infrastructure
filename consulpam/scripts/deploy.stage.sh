@@ -29,10 +29,10 @@ if docker pull "$USER_DOCKER/backend-dev-consulpam:latest" > /dev/null 2>&1; the
 fi
 
 # === Pull nova imagem ===
-echo "📦 Pull imagem $GITHUB_SHA"
-docker pull "$USER_DOCKER/backend-dev-consulpam:$GITHUB_SHA"
-docker tag  "$USER_DOCKER/backend-dev-consulpam:$GITHUB_SHA" \
-            "$USER_DOCKER/backend-dev-consulpam:latest"
+# echo "📦 Pull imagem $GITHUB_SHA"
+# docker pull "$USER_DOCKER/backend-dev-consulpam:$GITHUB_SHA"
+# docker tag  "$USER_DOCKER/backend-dev-consulpam:$GITHUB_SHA" \
+#             "$USER_DOCKER/backend-dev-consulpam:latest"
 
 # === Renderiza envs ===
 echo "🧩 Gerando arquivos .env"
