@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   api:
-    image: ${DOCKERHUB_USERNAME}/backend-dev-consulpam:${GITHUB_SHA}
+    image: ${DOCKERHUB_USERNAME}/backend-stage-consulpam:${GITHUB_SHA}
     depends_on:
       - postgres
     env_file:
