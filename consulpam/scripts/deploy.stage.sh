@@ -5,6 +5,7 @@ echo "🚀 Iniciando deploy STAGE"
 
 # 1. Gera os envs
 chmod +x ./dev/env.stage.sh
+./dev/env.stage.sh
 
 # 2. Login Docker (se necessário)
 echo "$DOCKERHUB_TOKEN" | docker login -u "$USER_DOCKER" --password-stdin
