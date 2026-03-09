@@ -30,7 +30,7 @@ services:
     container_name: DTB_CONSULPAM_PROD
     restart: always
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_USER: ${POSTGRES_USER}env.dev_front
       POSTGRES_DB: initial_db
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 

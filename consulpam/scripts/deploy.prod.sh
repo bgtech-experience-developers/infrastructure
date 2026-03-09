@@ -11,7 +11,7 @@ chmod +x ./production/generate-env.sh
 echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
 # 3. Atualiza imagem e container
-cd dev
+cd production
 
 docker compose pull api
 docker compose up -d --no-deps --force-recreate api
