@@ -1,0 +1,79 @@
+version: "3.8"
+
+services:
+  api:
+    image: ${DOCKERHUB_USERNAME}/backend-production-consulpam:${GITHUB_SHA}
+    depends_on:
+      - postgres
+    env_file:
+      - .env.prod
+    networks:
+      - consulpam_network_prod
+    container_name: consulpam-api-prod
+    ports:
+      - "8001:3000"
+    
+  front:
+    image: ${DOCKERHUB_USERNAME}/front-end-production-consulpam:latest
+    env_file:
+      - .env.prod_front
+    depends_on:
+      - api
+    networks:
+      - consulpam_network_prod
+    container_name: consulpam-web-prod
+
+    ports:
+      - "8002:3000"
+  postgres:
+    image: postgres:16
+    container_name: DTB_CONSULPAM_PROD
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: initial_db
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - pg_prod_data:/var/lib/postgresql/data
+    networks:
+      - consulpam_network_prod
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    env_file:
+      - .env.rabbitmq
+    networks:
+      - consulpam_network_prod
+    volumes:
+      - rabbitmq_prod_data:/var/lib/rabbitmq
+    container_name: RABBITMQ_PROD
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: pgadmin
+  #   restart: always
+  #   ports:
+  #     - "8080:80"
+  #   environment:
+  #     PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+  #     PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+  #   expose:
+  #     - "80"
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - consulpam_network_dev
+
+volumes:
+  pg_prod_data:
+    name: production_pg_data
+  rabbitmq_data:
+    name: rabbitmq_prod_data
+networks:
+   consulpam_network_prod:
+    external: true

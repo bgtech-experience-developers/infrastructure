@@ -1,0 +1,29 @@
+services:
+  redis:
+    image: redis:latest
+    networks:
+      - consulpam_network_prod
+    volumes:
+      - redis_data_prod:/data
+  rate-limiting-service: 
+    image: ${USER_DOCKER}/micro-service-production-consulpam:latest-rate
+    env_file:
+      - .env.rate_service_prod
+    networks:
+      - consulpam_network_prod
+    depends_on:
+      - redis
+    container_name: rate-limiting-production
+  notify-service:
+    image: ${USER_DOCKER}/micro-service-production-consulpam:latest-notify
+    env_file:
+      - .env.notify_service_prod
+    networks:
+      - consulpam_network_prod
+    container_name: notify-service-production
+    
+volumes:
+  redis_data_prod:
+networks:
+  consulpam_network_prod:
+    external: true
