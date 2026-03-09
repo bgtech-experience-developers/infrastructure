@@ -72,7 +72,7 @@ services:
 volumes:
   pg_prod_data:
     name: production_pg_data
-  rabbitmq_data:
+  rabbitmq_prod_data:
     name: rabbitmq_prod_data
 networks:
    consulpam_network_prod:
