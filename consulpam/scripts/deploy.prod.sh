@@ -4,8 +4,8 @@ set -e
 echo "🚀 Iniciando deploy PROD"
 
 # 1. Gera os envs
-chmod +x ./production/env.prod.sh
-./production/env.prod.sh
+chmod +x ./production/generate-env.sh
+./production/generate-env.sh
 
 # 2. Login Docker (se necessário)
 echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
