@@ -36,7 +36,7 @@ docker tag  "$USER_DOCKER/backend-dev-consulpam:$GITHUB_SHA" \
 
 # === Renderiza envs ===
 echo "🧩 Gerando arquivos .env"
-./dev/env.dev.sh
+./dev/env.stage.sh
 
 # === Subida dos containers ===
 echo "🐳 Atualizando backend sem downtime"
