@@ -47,7 +47,7 @@ services:
   rabbitmq:
     image: rabbitmq:3.13-management-alpine
     env_file:
-      - .env.rabbitmq
+      - .env.rabbitmq_prod
     networks:
       - consulpam_network_prod
     volumes:
