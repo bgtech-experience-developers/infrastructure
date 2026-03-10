@@ -13,8 +13,7 @@ echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 # 3. Atualiza imagem e container
 cd production
 
-# docker compose pull api
-# docker compose up -d --no-deps --force-recreate api
-docker compose --env-file .env.compose up --pull always --force-recreate -d
+docker compose pull api
+docker compose up -d --no-deps api
 
-echo "✅ Deploy STAGE finalizado"
+echo "✅ Deploy PROD finalizado"
